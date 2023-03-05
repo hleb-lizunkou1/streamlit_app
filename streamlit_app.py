@@ -19,13 +19,11 @@ streamlit.dataframe(fruits_to_show)
 import requests
 streamlit.header("Fruityvice Fruit Advice!")
 try:
-  add_my_fruit = streamlit.text_input('What fruit would you like to add?')
+  fruit_choice = streamlit.text_input('What fruit would you like to add?')
   if not add_my_fruit:
     streamlit.error('please choose a fruit')
   else:
-    fruit_choice = streamlit.text_input('What fruit would you like information about?','Kiwi')
     fruityvice_response = requests.get(f"https://fruityvice.com/api/fruit/{fruit_choice}")
-    # write your own comment - what does this do?
     streamlit.dataframe(fruityvice_normalized)
 except URLerror as e:
   streamlit.error(e)
