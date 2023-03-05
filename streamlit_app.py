@@ -1,6 +1,6 @@
 import streamlit
 import pandas
-import snowflake.connector
+
 
 streamlit.title("test")
 streamlit.header('🍌🥭 Build Your Own Fruit Smoothie 🥝🍇')
@@ -26,6 +26,8 @@ streamlit.write('The user entered ', fruit_choice)
 # write your own comment - what does this do?
 streamlit.dataframe(fruityvice_normalized)
 
+streamlit.stop()
+import snowflake.connector
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
 my_cur = my_cnx.cursor()
 my_cur.execute("SELECT * from fruit_load_list")
