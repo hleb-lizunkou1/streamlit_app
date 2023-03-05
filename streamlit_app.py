@@ -1,5 +1,6 @@
 import streamlit
 import pandas
+import snowflake.connector
 
 streamlit.title("test")
 streamlit.header('🍌🥭 Build Your Own Fruit Smoothie 🥝🍇')
