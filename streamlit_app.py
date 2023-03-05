@@ -2,6 +2,13 @@ import streamlit
 import pandas
 
 
+def insert_row_snowflake(new_fruit):
+  with my_cnx.cursor() as my_cur:
+    my_cur.execute(f"insert into fruit_load_list values ('{new_fruit}')")
+    return  "Thanks for adding" + new_fruit
+    
+    
+    
 streamlit.title("test")
 streamlit.header('🍌🥭 Build Your Own Fruit Smoothie 🥝🍇')
 streamlit.text('Omega 3 & Blueberry Oatmeal')
@@ -31,13 +38,17 @@ except URLerror as e:
     
 streamlit.stop()
 
-import snowflake.connector    
-my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
-my_cur = my_cnx.cursor()
-my_cur.execute("SELECT * from fruit_load_list")
-my_data_rows = my_cur.fetchall()
+import snowflake.connector 
 
-streamlit.dataframe(my_data_rows)
+add_my_fruit = streamlit.text_input('What fruit would you like to add?')
+streamlit.write("Thabks for adding ",add_my_fruit)
+if streamlit.button('Add fruit to the list'):
+  my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
+  back_from_function =insert_row_snowflake(add_my_fruit)
+  streamlit.text(back_from_function)
 
-
-streamlit.write('Thanks for adding ', add_my_fruit)
+if streamlit.button('Get fruit list'):
+  my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
+  my_data = get_fruit_load_list()
+  my_cnx.close()
+  streamlit.datafarame(my_data)
